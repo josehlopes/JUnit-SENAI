@@ -80,7 +80,7 @@ public class ProductTest {
     }
 
     @Test
-    public void testRemoveNonExistentProduct() {
+    public void testarRemoverProdutoNãoExistente() {
         productRepository.append(product1);
         productRepository.append(product2);
         int initialSize = productRepository.getAll().size();
@@ -91,13 +91,13 @@ public class ProductTest {
     }
 
     @Test
-    public void testUpdateNonExistentProduct() {
+    public void testarAtualizarProdutoNãoExistente() {
         Product produtoAAtualizar = new Product(3, "YinYang Dog", 50.0f, "");
         assertThrows(NoSuchElementException.class, () -> productRepository.update(3, new Product(3, "YinYang Dog", 50.0f, "")));
     }
 
     @Test //TODO: Código de jefté permite essa criação
-    public void testAddProductWithExistingId() {
+    public void testarAdicionarProdutoComIdJáExistente() {
         Product productWithExistingId = new Product(1, "YinYang Dog", 50.0f, "");
         productRepository.append(productWithExistingId);
         System.out.println(productRepository.getAll());

@@ -1,11 +1,13 @@
-package com.snack.repositories;
+package com.snack.service;
 
 import com.snack.entities.Product;
 import com.snack.services.ProductService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductServiceTest {
@@ -40,18 +42,25 @@ public class ProductServiceTest {
 
     @Test
     public void deveAtualizarProdutoExistente() {
-        productService.update(product1);
+        Product produtoOriginal = new Product(10, "Hot Dog", 10.4f, "src/main/java/com/snack/images/polar-bear-8703952_1920.jpg");
+        productService.save(produtoOriginal);
 
+        Product produtoAAtualizar = new Product(10, "Hot Dog", 10.4f, "src/main/java/com/snack/images/robo.png");
+        productService.update(produtoAAtualizar);
+
+        String image = productService.getImagePathById(10);
+
+        Assertions.assertTrue(image.contains("10.png"));
     }
 
     @Test
     public void deveRemoverProdutoExistente() {
         productService.remove(1);
-        assertNull(product1.getImage());
+        assertThrows(NoSuchElementException.class, () -> productService.getImagePathById(1) );
     }
 
     @Test
     public void deveObterCaminhoDaImagemPorId(){
-        assertEquals("src/main/java/com/snack/images/polar-bear-8703952_1920.jpg", productService.getImagePathById(1));
+        assertEquals("C:\\Users\\aluno\\Documents\\JUnit-SENAI\\src\\main\\java\\com\\snack\\images\\1.jpg", productService.getImagePathById(1));
     }
 }
